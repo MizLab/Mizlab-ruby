@@ -342,16 +342,18 @@
   
     <li>
       
-        <span class='name'>Size</span>
+        <span class='name'>window_size</span>
       
       
         <span class='type'>(<tt>Integer</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
       
         &mdash;
         <div class='inline'>
-<p>of window when scanning sequence. If not give this, will use `<a href="0">mappings.keys</a>.length -1`.</p>
+<p>Size of window when scanning sequence. If not give this, will use `<a href="0">mappings.keys</a>.length -1`.</p>
 </div>
       
     </li>
@@ -556,21 +558,21 @@
       <pre class="lines">
 
 
-146
-147
-148
-149
-150
-151
-152
 153
 154
 155
 156
-157</pre>
+157
+158
+159
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mizlab.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/mizlab.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_taxon'>fetch_taxon</span><span class='lparen'>(</span><span class='id identifier rubyid_taxonid'>taxonid</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_taxonid'>taxonid</span> <span class='op'>=</span> <span class='id identifier rubyid_taxonid'>taxonid</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_taxonid'>taxonid</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_taxonid'>taxonid</span><span class='rbracket'>]</span>
@@ -867,7 +869,7 @@
       
         &mdash;
         <div class='inline'>
-<p>coordinates on x.</p>
+<p>Coordinates on x dimention.</p>
 </div>
       
     </li>
@@ -883,7 +885,7 @@
       
         &mdash;
         <div class='inline'>
-<p>coordinates on y.</p>
+<p>Coordinates on y dimention.</p>
 </div>
       
     </li>
@@ -932,7 +934,14 @@
 137
 138
 139
-140</pre>
+140
+141
+142
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mizlab.rb', line 123</span>
@@ -944,14 +953,21 @@
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_filled_pixs'>filled_pixs</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='int'>0</span><span class='period'>.</span><span class='id identifier rubyid_upto'>upto</span><span class='lparen'>(</span><span class='id identifier rubyid_length'>length</span> <span class='op'>-</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
-    <span class='id identifier rubyid_filled_pixs'>filled_pixs</span> <span class='op'>+=</span> <span class='id identifier rubyid_bresenham'>bresenham</span><span class='lparen'>(</span><span class='id identifier rubyid_x_coordinates'>x_coordinates</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='comma'>,</span> <span class='id identifier rubyid_y_coordinates'>y_coordinates</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='comma'>,</span>
-                             <span class='id identifier rubyid_x_coordinates'>x_coordinates</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='comma'>,</span> <span class='id identifier rubyid_y_coordinates'>y_coordinates</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_x_coordinates'>x_coordinates</span><span class='lbracket'>[</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='id identifier rubyid_y_coordinates'>y_coordinates</span><span class='lbracket'>[</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                           <span class='id identifier rubyid_x_coordinates'>x_coordinates</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>...</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                           <span class='id identifier rubyid_y_coordinates'>y_coordinates</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>...</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_x_start'>x_start</span><span class='comma'>,</span> <span class='id identifier rubyid_y_start'>y_start</span><span class='comma'>,</span> <span class='id identifier rubyid_x_end'>x_end</span><span class='comma'>,</span> <span class='id identifier rubyid_y_end'>y_end</span><span class='op'>|</span>
+    <span class='id identifier rubyid_bresenham'>bresenham</span><span class='lparen'>(</span><span class='id identifier rubyid_x_start'>x_start</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='comma'>,</span> <span class='id identifier rubyid_y_start'>y_start</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='comma'>,</span>
+              <span class='id identifier rubyid_x_end'>x_end</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='comma'>,</span> <span class='id identifier rubyid_y_end'>y_end</span><span class='period'>.</span><span class='id identifier rubyid_truncate'>truncate</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pix'>pix</span><span class='op'>|</span>
+      <span class='id identifier rubyid_filled_pixs'>filled_pixs</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pix'>pix</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pix'>pix</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='comment'># NOTE:
+</span>      <span class='comment'># In set or hash, if including array make it so slow.
+</span>      <span class='comment'># Prevend it by converting array into symbol or freezed string.
+</span>    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_local_pattern_list'>local_pattern_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>*</span> <span class='int'>512</span>
-  <span class='id identifier rubyid_get_patterns'>get_patterns</span><span class='lparen'>(</span><span class='id identifier rubyid_filled_pixs'>filled_pixs</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pix'>pix</span><span class='op'>|</span>
-    <span class='id identifier rubyid_local_pattern_list'>local_pattern_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_convert'>convert</span><span class='lparen'>(</span><span class='id identifier rubyid_pix'>pix</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_get_patterns'>get_patterns</span><span class='lparen'>(</span><span class='id identifier rubyid_filled_pixs'>filled_pixs</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pattern'>pattern</span><span class='op'>|</span>
+    <span class='id identifier rubyid_local_pattern_list'>local_pattern_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_pattern'>pattern</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_local_pattern_list'>local_pattern_list</span>
 <span class='kw'>end</span></pre>
@@ -1091,7 +1107,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Nov  4 14:56:13 2021 by
+  Generated on Mon Nov  8 08:56:40 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.1).
 </div>
